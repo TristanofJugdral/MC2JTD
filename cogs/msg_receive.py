@@ -26,7 +26,7 @@ class MessageReceiver(commands.Cog):
                 fileLogs.seek(0, 2)  # Jump to the end of the file (a.k.a newest)
 
                 while not self.bot.is_closed():
-                    line = fileLogs.readline() # this is the message
+                    line = fileLogs.readline() # This is the message being sent
 
                     if line:
                         channel = self.bot.get_channel(config.CHANNEL_ID)
@@ -42,6 +42,8 @@ class MessageReceiver(commands.Cog):
 
                         if playerMatch and config.settings["showPlayerMessages"]:
                             username = playerMatch.group(1)
+                            if config.settings["anonymousMode"]:
+                                username = ""
                             message = playerMatch.group(2)
 
                             if not any(word in message.lower() for word in config.FILTERED_PLAYER):
