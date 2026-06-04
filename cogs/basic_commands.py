@@ -20,7 +20,7 @@ class BasicCommands(commands.Cog):
             "`mc2jtd.kill` - shut down bot from computer\n"
             "`mc2jtd.channel` - Set Discord message channel\n"
             "`mc2jtd.path` - Set file path to chat/system logs\n"
-            
+            "`mc2jtd.restart` - Refresh code if updates are needed\n"
             "`mc2jtd.playermsg` - Toggle player messages on/off\n"
             "`mc2jtd.systemmsg` - Toggle system messages on/off\n"
             "`mc2jtd.censor` - Toggle profanity filter on/off\n"
