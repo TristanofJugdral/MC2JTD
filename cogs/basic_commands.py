@@ -61,6 +61,7 @@ class BasicCommands(commands.Cog):
             return
         
         config.CHANNEL_ID = channel.id
+        config.save_config() # ** Store ID for next time
         await ctx.send(f"Messages will now be sent to {channel.mention}.")
 
     @channel.error
@@ -102,6 +103,7 @@ class BasicCommands(commands.Cog):
             return
 
         config.LOG_PATH = path
+        config.save_config() # ** Store path for next time
         await ctx.send(f"Log path updated:\n`{config.LOG_PATH}`")
     
     # /playermsg - toggle player messages
