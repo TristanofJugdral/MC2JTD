@@ -20,6 +20,7 @@ class BasicCommands(commands.Cog):
             "`mc2jtd.kill` - shut down bot from computer\n"
             "`mc2jtd.channel` - Set Discord message channel\n"
             "`mc2jtd.path` - Set file path to chat/system logs\n"
+            
             "`mc2jtd.playermsg` - Toggle player messages on/off\n"
             "`mc2jtd.systemmsg` - Toggle system messages on/off\n"
             "`mc2jtd.censor` - Toggle profanity filter on/off\n"
@@ -105,6 +106,19 @@ class BasicCommands(commands.Cog):
         config.LOG_PATH = path
         config.save_config() # ** Store path for next time
         await ctx.send(f"Log path updated:\n`{config.LOG_PATH}`")
+
+    # /restart - refresh code
+    @commands.command(name="restart")
+    @commands.is_owner()
+    async def restart(self, ctx):
+        receiver = self.bot.cogs.get("MessageReceiver")
+        if receiver:
+            if receiver.watch_log_task:
+                receiver.watch_log_task.cancel()
+            receiver.watch_log_task = asyncio.create_task(receiver.watch_log())
+            await ctx.send("Message Receider cog has been restarted")
+        else:
+            await ctx.send("Message Receiver cog not found...")
     
     # /playermsg - toggle player messages
     @commands.command(name="playermsg")
