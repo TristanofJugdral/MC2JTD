@@ -1,4 +1,9 @@
 # This file stores all user preferences:
+import json
+import os
+
+# Store data
+CONFIG_FILE = "config.json"
 
 # Bot behaviour settings
 settings = {
@@ -31,8 +36,24 @@ FILTERED_SYSTEM = [
     "fainting",
 ]
 
-# Choose Discord channel location
-CHANNEL_ID = 0
 
-# Define pathway to server logs
-LOG_PATH = r"C:\Users\MyName\curseforge\minecraft\Instances\COBBLEVERSE - Pokemon Adventure [Cobblemon]\logs\latest.log"
+
+# Load persistent config from config.json
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r") as f:
+            return json.load(f)
+    return {}
+
+def save_config():
+    with open(CONFIG_FILE, "w") as f:
+        json.dump({
+            "CHANNEL_ID": CHANNEL_ID,
+            "LOG_PATH": LOG_PATH,
+        }, f, indent=4)
+
+# Load saved values OR use defaults
+_config = load_config()
+CHANNEL_ID = _config.get("CHANNEL_ID", None)
+LOG_PATH = _config.get("LOG_PATH", None)
+# EXAMPLE: LOG_PATH = r"C:\Users\MyName\curseforge\minecraft\Instances\COBBLEVERSE - Pokemon Adventure [Cobblemon]\logs\latest.log"
