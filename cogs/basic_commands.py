@@ -17,6 +17,7 @@ class BasicCommands(commands.Cog):
             "**MC2JTD Commands**\n"
             "`mc2jtd.help` - List of commands\n"
             "`mc2jtd.status` - Check if the server is running\n"
+            "`mc2jtd.kill` - shut down bot from computer\n"
             "`mc2jtd.channel` - Set Discord message channel\n"
             "`mc2jtd.path` - Set file path to chat/system logs\n"
             "`mc2jtd.playermsg` - Toggle player messages on/off\n"
@@ -35,6 +36,18 @@ class BasicCommands(commands.Cog):
         else:
             await ctx.send(f"ERROR: Server logs not found.")
             
+    # /kill - shut down the bot
+    @commands.command(name="kill")
+    @commands.is_owner()
+    async def kill(self, ctx):
+        await ctx.send("Shutting down...")
+        await self.bot.close()
+
+    @kill.error
+    async def kill_error(self, ctx, error):
+        if isinstance(error, commands.NotOwner):
+            await ctx.send("Only the bot owner can do that.")
+            
     # /channel - set Discord message channel
     @commands.command(name="channel")
     async def channel(self, ctx, channel: discord.TextChannel = None):
@@ -50,7 +63,6 @@ class BasicCommands(commands.Cog):
         config.CHANNEL_ID = channel.id
         await ctx.send(f"Messages will now be sent to {channel.mention}.")
 
-    # {channel} error catch:
     @channel.error
     async def channel_error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
