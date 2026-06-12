@@ -1,5 +1,5 @@
 # cogs/msg_receive.py
-# MESSAGE RECEIVER FILE
+# MESSAGE RECEIVER FILE. ALSO SENDS MESSAGES ON DISCORD
 
 # @TristanofJugdral (Ver. 1.1.4 | 8 June 2026)
 
